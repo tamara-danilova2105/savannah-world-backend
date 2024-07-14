@@ -17,14 +17,14 @@ const catSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
-    string: {
+    shipment: {
         type: String,
         require: true,
     },
-    images: {
-        type: String,
-        required: true
-    }
+    // images: {
+    //     type: String,
+    //     required: true
+    // }
 });
 
 module.exports = mongoose.model('Cat', catSchema);

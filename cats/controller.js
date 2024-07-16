@@ -66,3 +66,8 @@ module.exports.deleteCat = async (req, res) => {
     }
 }
 
+module.exports.uploadFile = (req, res) => {
+    res.json({
+        url: `/uploads/${req.file.originalname}`
+    })
+}

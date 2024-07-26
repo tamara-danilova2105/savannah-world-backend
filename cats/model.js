@@ -21,7 +21,7 @@ const catSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
-    images: {
+    image: {
         type: String,
         required: true
     }

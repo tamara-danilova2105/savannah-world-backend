@@ -2,7 +2,9 @@ const Cat = require('./model');
 
 module.exports.getCats = async (req, res) => {
     try {
-        const { generate, sex, age, shipment } = req.query; 
+        const { generate, sex, age, shipment, page = 2 } = req.query; 
+
+        const limit = 12;
 
         const filter = {};
         if (generate && generate.length > 0) {
@@ -18,7 +20,9 @@ module.exports.getCats = async (req, res) => {
             filter.shipment = { $in: shipment.split(',') };
         }
 
-        const cats = await Cat.find(filter);
+        const skip = (page - 1) * limit;
+
+        const cats = await Cat.find(filter).skip(skip).limit(limit);
         res.status(200).send(cats);
     } catch (error) {
         res.status(400).send({ error: error.message });

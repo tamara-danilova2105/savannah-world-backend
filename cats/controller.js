@@ -2,7 +2,7 @@ const Cat = require('./model');
 
 module.exports.getCats = async (req, res) => {
     try {
-        const { generate, sex, age, shipment, page = 2 } = req.query; 
+        const { generate, sex, age, shipment, page = 1 } = req.query; 
 
         const limit = 12;
 

@@ -21,9 +21,10 @@ module.exports.getCats = async (req, res) => {
         }
 
         const skip = (page - 1) * limit;
+        const sort = { _id: -1 };
 
         const totalCount = await Cat.countDocuments(filter); 
-        const cats = await Cat.find(filter).skip(skip).limit(limit);
+        const cats = await Cat.find(filter).sort(sort).skip(skip).limit(limit);
 
         res.status(200).send({ cats, totalCount });
     } catch (error) {

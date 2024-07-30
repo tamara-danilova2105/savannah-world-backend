@@ -1,8 +1,10 @@
 const Cat = require('./model');
+const fs = require('fs');
+const path = require('path');
 
 module.exports.getCats = async (req, res) => {
     try {
-        const { generate, sex, age, shipment, page = 1 } = req.query; 
+        const { generate, sex, age, shipment, page = 1 } = req.query;
 
         const limit = 12;
 
@@ -23,7 +25,7 @@ module.exports.getCats = async (req, res) => {
         const skip = (page - 1) * limit;
         const sort = { _id: -1 };
 
-        const totalCount = await Cat.countDocuments(filter); 
+        const totalCount = await Cat.countDocuments(filter);
         const cats = await Cat.find(filter).sort(sort).skip(skip).limit(limit);
 
         res.status(200).send({ cats, totalCount });
@@ -66,6 +68,16 @@ module.exports.updatedCat = async (req, res) => {
 module.exports.deleteCat = async (req, res) => {
     const { id } = req.params;
     try {
+        const cat = await Cat.findById(id);
+
+        if (cat && cat.image) {
+            fs.unlink(path.join(__dirname, '..', 'uploads', cat.image), err => {
+                if (err) {
+                    return res.status(500).send({ error: err.message });
+                }
+            });
+        }
+
         await Cat.findByIdAndDelete(id);
         res.status(204).send();
     } catch (error) {

@@ -3,23 +3,23 @@ const mongoose = require('mongoose');
 const catSchema = new mongoose.Schema({
     name_cat: {
         type: String,
-        require: true,
+        required: true,
     },
     generate: {
         type: String,
-        require: true,
+        required: true,
     },
     sex: {
         type: String,
-        require: true,
+        required: true,
     },
     age: {
         type: String,
-        require: true,
+        required: true,
     },
     shipment: {
         type: String,
-        require: true,
+        required: true,
     },
     image: {
         type: String,

@@ -9,12 +9,6 @@ module.exports.loginAdmin = async (req, res) => {
     try {
         const { username, password } = req.body;
 
-        console.log(username);
-        console.log(password);
-
-        console.log('Admin Username:', adminUsername);
-        console.log('Admin Password Hash:', adminPasswordHash);
-
         if (!username || !password) {
             return res.status(400).json({ message: 'Username and password are required' });
         }

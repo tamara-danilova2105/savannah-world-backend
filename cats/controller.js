@@ -49,16 +49,30 @@ module.exports.saveCat = async (req, res) => {
 
 module.exports.updatedCat = async (req, res) => {
     const { id } = req.params;
-    const cat = req.body;
+    const newCatData = req.body;
+
     try {
+        const existingCat = await Cat.findById(id);
+        if (!existingCat) {
+            return res.status(404).send({ error: 'Cat not found' });
+        };
+
+        if (existingCat.image && newCatData.image && existingCat.image !== newCatData.image) {
+            const oldImagePath = path.join(__dirname, '..', 'uploads', existingCat.image);
+            if (fs.existsSync(oldImagePath)) {
+                fs.unlink(oldImagePath, err => {
+                    if (err) {
+                        return res.status(500).send({ error: err.message });
+                    }
+                });
+            }
+        }
+        
         const updatedCat = await Cat.findByIdAndUpdate(
             id,
-            cat,
+            newCatData,
             { new: true }
         );
-        if (!updatedCat) {
-            return res.status(404).send({ error: 'Cat not found' });
-        }
         res.status(200).send(updatedCat);
     } catch (error) {
         res.status(400).send({ error: error.message });

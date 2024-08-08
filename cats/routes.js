@@ -14,10 +14,10 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-router.get('/', getCats);
-router.post('/', saveCat);
-router.delete('/:id', deleteCat);
-router.put('/:id', updatedCat);
+router.get('/cats', getCats);
+router.post('/cats', saveCat);
+router.delete('/cats/:id', deleteCat);
+router.put('/cats/:id', updatedCat);
 
 router.post('/upload', upload.single('image'), uploadFile);
 
